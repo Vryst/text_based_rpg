@@ -102,4 +102,4 @@ Contributions are welcome! To contribute to this project, follow these steps:
 
 ## LICENSE
 
-This project is licensed under the - see the LICENSE file for details.
+This project is licensed under the GNU General Public License v2.0 - see the LICENSE file for details.
