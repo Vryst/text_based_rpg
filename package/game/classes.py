@@ -21,12 +21,19 @@ class Hero:
         
     def Attack(attacker, target):
         os.system("clear")
-        if target.health <= 0:
+        
+        if target.health <=0 and attacker.health <= 0:
+            print(f"{attacker.name} dan {target.name} telah mati\n")
+            
+        elif target.health <= 0:
             print(f"{target.name} sudah mati :v")
+            print(f"{attacker.name} HP = {attacker.health}\n{target.name} HP = {target.health}")
             
             pass
-        if attacker.health <= 0:
+            
+        elif attacker.health <= 0:
             print(f"{attacker.name} sudah mati :v")
+            print(f"{attacker.name} HP = {attacker.health}\n{target.name} HP = {target.health}")
             
             pass
             
