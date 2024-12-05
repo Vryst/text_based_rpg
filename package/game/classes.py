@@ -1,12 +1,44 @@
 
-
+import random
 import os
 
-clear = os.system("clear")
+def clear():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
+roles = [
+"warrior",
+"archer",
+"mage"
+]
+musuh = [
+"knight",
+"skeleton",
+"slime",
+"wood"
+]
+
+
+
+
+
+def randomizer(a=100):
+    try:
+            if type(a) == int:
+                return random.choice(range(a))
+            elif type(a) == list:
+                return random.choice(a)
+    except:
+            print("\n\nMohon masukkan data dengan benar\n\n")
+            
+
+
 
 class Hero:
     
-    def __init__(self,name,role,health,attack,defend,agility,crate,cdamage):
+    def __init__(self,name=randomizer(musuh),role=randomizer(roles),health=randomizer(),attack=randomizer(),defend=randomizer(),agility=randomizer(),crate=randomizer(),cdamage=randomizer()):
         self.name = name
         self.role = role
         self.health = health
@@ -19,8 +51,19 @@ class Hero:
         self.inventory = []
         
         
+    def getStat(self):
+        print(f"""
+        Name = {self.name}
+        Class = {self.role}
+        HP = {self.health}
+        ATK = {self.attack}
+        DEF = {self.defend}
+        AGI = {self.agility}
+        CRIT RATE = {self.crate}
+        CRIT DAMAGE = {self.cdamage}
+        """)
     def Attack(attacker, target):
-        os.system("clear")
+        clear()
         
         if target.health <=0 and attacker.health <= 0:
             print(f"{attacker.name} dan {target.name} telah mati\n")
@@ -38,9 +81,9 @@ class Hero:
             pass
             
         else:
-            target.health -= attacker.attack
+            target.health -= attacker.attack - (target.defend * 2 if attacker.guard == True else target.defend)
             
-            os.system("clear")
+            clear()
             
             print(f"{attacker.name} HP = {attacker.health}\n{target.name} HP = {target.health}")
             print(f"\n\n{attacker.name} telah memberikan damage {attacker.attack} ke {target.name}")
@@ -52,3 +95,11 @@ class Hero:
         
     def run():
     	return (True if random(range(1,10)) > 1 else False)
+    	
+class Enemy(Hero):
+    
+    pass
+    
+#manuk = Enemy(randomizer(musuh))
+
+#manuk.getStat()

@@ -1,8 +1,8 @@
 
+import random
 import os
 import time
 from classes import *
-
 
 
 
@@ -54,26 +54,21 @@ def main():
        )
     
     
-    musuh = Hero("elmanuk",
-    "warrior",
-    1000,
-    90,
-    percent(20),
-    percent(15),
-    percent(35),
-    percent(80)
-    )
     
     
-    encounter(hero,musuh)
+    while True:
+        encounter(hero)
+        
+        
+        i = input("input apa saja untuk melanjutkan")        
     
-    print("\n\napacoba")
     
-    i = input("input apa saja untuk melanjutkan")
+    
+    
 
 
 
-
+#pilih role
 def pilih_role():
     
     print(f"Selamat datang di Athanor :v\n\n\n")
@@ -85,18 +80,31 @@ def pilih_role():
 
 
 
-
+#percent
 def percent(num=1):
         return num/100
         
 
 
 
-def encounter(hero,enemy):
+
+#event
+def pergi():
+    menemukan = random.choice(range(2))
+    return 1 if menemukan == 1 else 2
+    
+    
+    
+#encounter
+def encounter(hero):
+    
+    
+    enemy = Enemy(randomizer(musuh))
+    enemy.getStat()
     
     on = True
-    
-    while on:
+    if pergi() == 1:
+       while on:
         
         lanjut = input("Serang? (y/n) : ")
         
@@ -110,69 +118,64 @@ def encounter(hero,enemy):
                        
                        enemy.Attack(hero)
                    if lanjut == "n":
-                       print("Game berakhir :v")
-                       break
+                     print("Game berakhir :v")
+                     del enemy
+                     break
+     
+    if pergi() == 2:
+        shop(hero)
+        
+    else:
+        clear()
+        print("Kamu berjalan tanpa arah")
 
-
-
-
-def shop(player,merchant):
-	print(f"Selamat datang di toko, orang asing! heheh..")
-	
-	
-	
-	if player.role == "thief":
-		print("\n1)Beli\n2)Jual\n3)Mencuri? heheheh :v")
-		pass
-	
-	
-	if player.role == "bandit":
-		print("\n1)Beli\n2)Jual\n3)Rampok? heheheh :v")
-		pass
-	
-	
-	if player.role == "hero":
-		print("\n1)Beli\n2)Jual\n3)Tunjukkan jasa?(menyombongkan diri dengan poin reputasi) :v")
-		pass
-	
-	
-	else:
-		print("\n1)Beli\n2)Jual\n3)Pergi")
-	
-	aksi = True
-	
-	while aksi:
-		
-		
-		
-		try:
-			global pilihan
-			pilihan = int(input("\nPilih(1,2,3) : "))
-		except:
-			pilihan = 0
-			print("Apakah kau bisa baca oh orang asing?")
-			#os.system("clear")
-			pass
-	
-		if pilihan == 1:
-			print("aku aob")
-			cls
-			break
-
-map = {
-
-"merchant" : "elmanuk"
-
-}
-
-'''p = Hero("Elmanuk",
-    "hero", # class
-    700, # hp
-    80, # atk
-    25, # def
-    percent(65), # agi
-    50, # c.rate
-    percent(100) # c.dmg
-    )'''
+#shop
+def shop(player):
+    clear()
+    print(f"Selamat datang di toko, orang asing! heheh..")
     
-#shop(p,1)
+    
+    
+    if player.role == "thief":
+        print("\n1)Beli\n2)Jual\n3)Mencuri? heheheh :v")
+        pass
+    
+    
+    if player.role == "bandit":
+        print("\n1)Beli\n2)Jual\n3)Rampok? heheheh :v")
+        pass
+    
+    
+    if player.role == "hero":
+        print("\n1)Beli\n2)Jual\n3)Tunjukkan jasa?(menyombongkan diri dengan poin reputasi) :v")
+        pass
+    
+    
+    else:
+        print("\n1)Beli\n2)Jual\n3)Pergi")
+    
+    aksi = True
+    
+    while aksi:
+        
+        try:
+            global pilihan
+            pilihan = int(input("\nPilih(1,2,3) : "))
+        except:
+            pilihan = 0
+            print("Apakah kau bisa baca oh orang asing?")
+            #os.system("clear")
+            pass
+    
+        if pilihan == 1:
+            print("\n\nsedang maintenance, harap kembali beberapa hari kemudian :v\n\n")
+            break
+            
+        if pilihan == 2:
+            print("\n\nsedang maintenance, harap kembali beberapa hari kemudian :v\n\n")
+            break
+        
+        if pilihan == 3:
+            aksi = False
+            
+ 
