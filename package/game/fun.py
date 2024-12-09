@@ -87,10 +87,13 @@ def percent(num=1):
 
 
 
+            
+            
+            
 
 #event
 def pergi():
-    menemukan = random.choice(range(2))
+    menemukan = random.choice(range(1,2))
     return 1 if menemukan == 1 else 2
     
     
@@ -99,7 +102,8 @@ def pergi():
 def encounter(hero):
     
     
-    enemy = Enemy(randomizer(musuh))
+    enemy = Enemy(randomizer(musuh),randomizer(roles),randomizer(),randomizer(),randomizer(),randomizer(),randomizer(),randomizer())
+    
     enemy.getStat()
     
     on = True
@@ -114,12 +118,14 @@ def encounter(hero):
                        
                        pass
                        
+                       
+                       
                        hero.Attack(enemy)
                        
                        enemy.Attack(hero)
                    if lanjut == "n":
                      print("Game berakhir :v")
-                     del enemy
+                     enemy = None
                      break
      
     if pergi() == 2:

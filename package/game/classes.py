@@ -2,6 +2,8 @@
 import random
 import os
 
+
+
 def clear():
     if os.name == 'nt':
         os.system('cls')
@@ -26,10 +28,8 @@ musuh = [
 ]
 
 
-
-
-
-def randomizer(a=100):
+#random picker
+def randomizer(a=1000):
     try:
             if type(a) == int:
                 return random.choice(range(a))
@@ -37,13 +37,16 @@ def randomizer(a=100):
                 return random.choice(a)
     except:
             print("\n\nMohon masukkan data dengan benar\n\n")
-            
+
+
+
+
 
 
 
 class Hero:
     
-    def __init__(self,name=randomizer(musuh),role=randomizer(roles),health=randomizer(),attack=randomizer(),defend=randomizer(),agility=randomizer(),crate=randomizer(),cdamage=randomizer()):
+    def __init__(self,name=None,role=None,health=None,attack=None,defend=None,agility=None,crate=None,cdamage=None):
         self.name = name
         self.role = role
         self.health = health
@@ -67,32 +70,36 @@ class Hero:
         CRIT RATE = {self.crate}
         CRIT DAMAGE = {self.cdamage}
         """)
-    def Attack(attacker, target):
+    def Attack(self, target):
         clear()
         
-        if target.health <=0 and attacker.health <= 0:
-            print(f"{attacker.name} dan {target.name} telah mati\n")
+        if target.health <=0 and self.health <= 0:
+            print(f"{self.name} dan {target.name} telah mati\n")
             
         elif target.health <= 0:
             print(f"{target.name} sudah mati :v")
-            print(f"{attacker.name} HP = {attacker.health}\n{target.name} HP = {target.health}")
+            print(f"{self.name} HP = {self.health}\n{target.name} HP = {target.health}")
             
             pass
             
-        elif attacker.health <= 0:
-            print(f"{attacker.name} sudah mati :v")
-            print(f"{attacker.name} HP = {attacker.health}\n{target.name} HP = {target.health}")
+        elif self.health <= 0:
+            print(f"{self.name} sudah mati :v")
+            print(f"{self.name} HP = {self.health}\n{target.name} HP = {target.health}")
             
             pass
             
         else:
-            target.health -= attacker.attack - (target.defend * 2 if attacker.guard == True else target.defend)
+            if target.guard == True:
+                target.health -= self.attack - target.defend * 2
+                
+            else:
+                target.health -= self.attack
             
             clear()
             
-            print(f"{attacker.name} HP = {attacker.health}\n{target.name} HP = {target.health}")
-            print(f"\n\n{attacker.name} telah memberikan damage {attacker.attack} ke {target.name}")
-            print(f"\n{target.name} telah memberikan damage {target.attack} ke {attacker.name}")
+            print(f"{self.name} HP = {self.health}\n{target.name} HP = {target.health}")
+            print(f"\n\n{self.name} telah memberikan damage {self.attack} ke {target.name}")
+            print(f"\n{target.name} telah memberikan damage {target.attack} ke {self.name}")
             
     def guard(self):
         self.guard = True
@@ -105,6 +112,3 @@ class Enemy(Hero):
     
     pass
     
-#manuk = Enemy(randomizer(musuh))
-
-#manuk.getStat()
