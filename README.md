@@ -33,6 +33,8 @@ This game is perfect for those who enjoy classic RPG mechanics but without any g
    • Guard
    • Item
    • Run
+- Shop that provides Potions, Supplies, and various Equipment
+- Create-your-own skill (future plan)
 - Easy-to-follow narrative flow with choices that affect outcomes
 - **(Optional)** Save and load game functionality
 

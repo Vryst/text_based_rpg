@@ -11,13 +11,18 @@ def clear():
 roles = [
 "warrior",
 "archer",
-"mage"
+"mage",
+"thief",
+"hero",
+"bandit"
 ]
 musuh = [
 "knight",
 "skeleton",
 "slime",
-"wood"
+"wood",
+"elmanuk",
+"otong"
 ]
 
 
