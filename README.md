@@ -4,7 +4,7 @@ Welcome to **Flandyr** :D
 
 (this is my first game project here! please don't judge me harshly :'v)
 
-In this game, y'all will fight enemies(monsters obviously, there's many tribes too that could ended up having their blod in thy sword 💀), level up, and avoid the “Game Over” screen that comes after you make a ridiculously bad decision(git gud). Think of it as a choose-your-own-adventure book, except with a lot more stats, combat, and questionable life choices. All it takes is your imagination (and maybe a bit of kaffe ☕).
+In this game, y'all will fight enemies(monsters obviously, there's many tribes too that could ended up having their blod on thy sword 💀), level up, and avoid the “Game Over” screen that comes after you make a ridiculously bad decision(git gud). Think of it as a choose-your-own-whatever book, with a lot more stats, combat, and questionable choices. All it takes is your imagination (and maybe a bit of kaffe ☕).
 So, grab your sword, dive into a world where anything is possible... welp, as long i have many ideas to put into this game
 
 YOUR SUGGESTIONS IS HIGHLY NEEDED (⁠≧⁠▽⁠≦⁠)
@@ -21,7 +21,7 @@ YOUR SUGGESTIONS IS HIGHLY NEEDED (⁠≧⁠▽⁠≦⁠)
 
 The **Text-Based RPG** is a game where players can engage in an adventure entirely through text. The world is described to the player, and they make choices to progress. There you can fight enemies, gain experience, looting theirs, upgrading your character stats, and having an interactive dialogue.
 
-This game is perfect for those who enjoy classic RPG mechanics but without any graphical interface—everything is presented in simple text(i haven't learn about it yet, well..)
+This game is perfect for those who enjoy classic RPG mechanics but without any graphical interface—everything is presented in simple text(i haven't learn to make one with GUI, well..)
 
 ## Features
 
