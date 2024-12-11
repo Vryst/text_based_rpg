@@ -28,6 +28,7 @@ This game is perfect for those who enjoy classic RPG mechanics but without any g
 - Randomly generated enemies and loot
 - Multiple classes with unique abilities and unique interaction
 - A simple leveling system for your character
+- Many places to venture at
 - Basic System
    • Attack(skill,spell, and similiar to them will be added in this menu)
    • Guard
