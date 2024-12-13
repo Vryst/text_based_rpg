@@ -1,7 +1,7 @@
 
 import random
 import os
-
+from time import sleep
 
 
 def clear():
@@ -19,6 +19,9 @@ roles_index = [
 6
 ]
 
+#roles_index.append(len(roles_index)+1)
+#print(roles_index)
+
 roles = [
 "warrior",
 "archer",
@@ -26,6 +29,13 @@ roles = [
 "thief",
 "hero",
 "bandit"
+]
+
+special_shop = [
+"hero",
+"thief",
+"bandit",
+"pirate"
 ]
 
 musuh = [
@@ -57,13 +67,25 @@ def randomizer(a=100):
                 return random.choice(range(a))
             elif type(a) == list:
                 return random.choice(a)
-    except:
+    except (TypeError, ValueError):
             print("\n\nMohon masukkan data dengan benar\n\n")
 
 
+#percent
+def percent(num=1):
+        return num/100
+        
+        
+#checking crit success
+def critical(player):
+    success = random.choice(range(1,100+1)) <= player.crate
+    
+    return success
+    
 
-def stat_reduction(target,amount):
-    stat_now = target.attack
+#reducing input damage 
+def attack_reduction(target,amount):
+    
     
     
     if target.attack - amount <= 0:
@@ -75,18 +97,6 @@ def stat_reduction(target,amount):
         return result
     
     
-
-'''
-class Dummy:
-    def __init__(self,attack):
-        self.attack = attack
-        
-dummy = Dummy(100)
-print(dummy.attack)
-
-if stat_reduction(dummy,50) ==
-print(dummy.attack)
-'''
 
 
 class Hero:
@@ -102,7 +112,11 @@ class Hero:
         self.cdamage = cdamage
         self.guard = False
         self.inventory = []
-        self.reputasi = reputasi
+        if role == "hero":
+            
+            self.reputation = reputasi
+        else:
+            self.reputation = 0
         
     def getStat(self):
         print(f"""
@@ -117,6 +131,9 @@ class Hero:
         """)
     def Attack(self, target):
         clear()
+        
+        total_damage = self.attack
+        crit = critical(self)
         
         if target.health <=0 and self.health <= 0:
             print(f"{self.name} dan {target.name} telah mati\n")
@@ -134,26 +151,43 @@ class Hero:
             pass
             
         else:
+            
             if target.guard == True:
-                target.health -= stat_reduction(self,target.defend*2)
+                target.health -= attack_reduction(self,target.defend*2)
                 
                 target.guard = False
                 
             else:
-                target.health -= self.attack
+                
+                if crit:
+                    
+                    total_damage += int(self.attack * self.cdamage)
+                    target.health -= total_damage
+                    
+                    
+                    
+                else:
+                    crit = False
+                    target.health -= total_damage
             
             clear()
             
+            #critical hit alert
+            if crit:
+                print(f"{self.name} CRITICAL HIT\n")
+                
+                
             print(f"{self.name} HP = {self.health}\n{target.name} HP = {target.health}")
-            print(f"\n\n{self.name} telah memberikan damage {self.attack} ke {target.name}")
-            #print(f"\n{target.name} telah memberikan damage {target.attack} ke {self.name}")
+            
+            print(f"\n\n{self.name} telah memberikan damage {total_damage} ke {target.name}")
+            total_damage = self.attack
             
     def Guard(self):
         self.guard = True
         print(f"Defend milik {self.name} telah meningkat 2x lipat!")
         
     def Run(self):
-    	return True if random.choice(range(self.agility)) >= 1 else False
+        return random.randint(1, 100) <= self.agility
 
 
 class Enemy(Hero):
@@ -161,11 +195,29 @@ class Enemy(Hero):
     pass
     
     
-'''
-debug
-a = Hero()
-a.agility = randomizer()
 
-k = a.run()
-print(k)
-'''
+#debug
+#hero = Hero("a",
+#       "thief", # class
+#       900, # hp
+#       100, # atk
+#       20, # def
+#       5, # agi
+#       100, # c.rate
+#       percent(100) # c.dmg
+#       )
+#       
+#monster = Enemy("b",
+#       "bandit", # class
+#       900, # hp
+#       100, # atk
+#       20, # def
+#       5, # agi
+#       100, # c.rate
+#       percent(70) # c.dmg
+#       )
+#       
+#hero.Attack(monster)
+#sleep(1)
+#monster.Attack(hero)
+#print(hero.reputation)

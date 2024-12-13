@@ -8,98 +8,25 @@ def maintenance():
     print("Fitur maintenance! :v")
     sleep(1)
 
+def create_hero(hero_name, hero_class):
+    roles = [
+       #("role",   HP   ATK  DEF AGI CRATE CDMG)
+        ("warrior", 1000, 130, 30, 15, 35, 80),
+        ("mage", 400, 270, 15, 10, 10, 120),
+        ("archer", 700, 80, 25, 45, 50, 100),
+        ("hero", 2000, 100, 70, 10, 30, 100, 100),
+        ("thief", 450, 50, 15, 70, 75, 200),
+        ("bandit", 900, 95, 20, 5, 25, 70)
+    ]
+    
+    role, health, attack, defend, agility, crit_rate, crit_dmg = roles[hero_class - 1]
+    return Hero(hero_name, role, health, attack, defend, agility, crit_rate, percent(crit_dmg))
+    
 def main():
-    
     clear()
-    
-    global hero_class
-    global hero_name
-    global hero
-    
-    
-    
-    elmanuk = pilih_role()
-    hero_class = elmanuk[1]
-    hero_name = elmanuk[0]
-    
-    if hero_class == 1:
-       hero = Hero(hero_name,
-       "warrior", # class
-       1000, # hp
-       130, # atk
-       30, # def
-       15, # agi
-       35, # c.rate
-       percent(80) # c.dmg
-       )
-       
-    if hero_class == 2:
-       hero = Hero(
-       hero_name,
-       "mage",  # class
-       400,     # hp
-       270,     # atk
-       15,      # def
-       10,  # agi
-       10,      # c.rate
-       percent(120)   # c.dmg
-       )
+    hero_name, hero_class = pilih_role()  # Pass directly
+    hero = create_hero(hero_name, hero_class)
 
-    
-    
-    if hero_class == 3:
-       hero = Hero(hero_name,
-       "archer", # class
-       700, # hp
-       80, # atk
-       25, # def
-       45, # agi
-       50, # c.rate
-       percent(100) # c.dmg
-       )
-    
-    
-    
-    if hero_class == 4:
-       hero = Hero(hero_name,
-       "hero", # class
-       2000, # hp
-       100, # atk
-       70, # def
-       10, # agi
-       30, # c.rate
-       percent(100), # c.dmg
-       100
-       )
-    
-    
-    
-    if hero_class == 5:
-       hero = Hero(hero_name,
-       "thief", # class
-       450, # hp
-       50, # atk
-       15, # def
-       70, # agi
-       75, # c.rate
-       percent(200) # c.dmg
-       )
-    
-    
-    
-    if hero_class == 6:
-       hero = Hero(hero_name,
-       "bandit", # class
-       900, # hp
-       95, # atk
-       20, # def
-       5, # agi
-       25, # c.rate
-       percent(70) # c.dmg
-       )
-    
-    
-    
     
     while True:
         encounter(hero)
@@ -108,10 +35,6 @@ def main():
         i = input("input apa saja untuk melanjutkan")        
     
     
-    
-    
-
-
 
 #pilih role
 def pilih_role():
@@ -139,30 +62,38 @@ def pilih_role():
     
     
 
-
-
-#percent
-def percent(num=1):
-        return num/100
-        
-
-
-
 def battle(player,enemy):
             clear()
             print(f"Kamu bertarung melawan {enemy.name}!\n")
             
             while True:
                 
-                print("""
+                print(f"{player.name}'s HP: {player.health}")
+                print(f"{enemy.name}'s HP: {enemy.health}")
+                
+                
+                try:
+                    
+                    while True:
+                        try:
+                            print("""
 Pilih aksi yang tersedia:
       1. Serang
       2. Bertahan
       3. Item
       4. Kabur\n""")
-                try:
-                    aksi_battle = int(input("Pilihan(1/2/3/4): "))
-                    
+                            aksi_battle = int(input("Pilihan(1/2/3/4): "))
+                            if aksi_battle in [1, 2, 3, 4]:
+                                break  # Exit the loop if valid input is given
+                            else:
+                                clear()
+                                print("Pilihan tidak valid. Silakan pilih 1, 2, 3, atau 4.")
+                                sleep(1)
+                        except ValueError:
+                            clear()
+                            print("Harap masukkan angka yang valid (1/2/3/4).")
+                            sleep(1)
+        
                     if aksi_battle == 1:
                         player.Attack(enemy)
                         sleep(1)
@@ -198,8 +129,13 @@ Pilih aksi yang tersedia:
                                 sleep(1)
                                 pass
                     if aksi_battle == 4:
-                        kabur = player.Run()
+                        
+                        if enemy.health <= 0:
+                            break
+                        elif player.health <= 0:
+                            break
                         try:
+                            kabur = player.Run()
                             if kabur:
                                 print("kamu kabur")
                                 sleep(1)
@@ -207,8 +143,9 @@ Pilih aksi yang tersedia:
                             else:
                                 print("gagal")
                                 sleep(1)
+                                clear()
                         except TypeError:
-                            kabur = float(kabur)
+                            print("Easter egg! :D")
                             
                     else:
                         clear()
@@ -216,7 +153,15 @@ Pilih aksi yang tersedia:
                 except ValueError:
                     clear()
                     print("Harap masukkan input yang valid(1/2/3/4)!\n")
-
+            if player.health <= 0:
+                return False
+                
+            if enemy.health <= 0:
+                
+                return True
+            
+            else:
+                return "kabur"
 
 #event
 def pergi():
@@ -229,32 +174,40 @@ def pergi():
 #encounter
 def encounter(hero):
     
-    
+    berjalan = pergi()
     enemy = Enemy(randomizer(musuh),randomizer(roles),randomizer(),randomizer(),randomizer(),randomizer(),randomizer(),randomizer())
     
     enemy.getStat()
     
     on = True
-    if pergi() == 1:
+    if berjalan == 1:
        while on:
         
         lanjut = input("Serang? (y/n) : ").lower()
         
         if lanjut == "y":
                   hasil_pertarungan = battle(hero,enemy)
+                  if hasil_pertarungan == "kabur":
+                      print("\nKamu berhasil melarikan diri")
+                      sleep(1)
+                      break
                   if hasil_pertarungan == True:
-                      print("\nKamu mengalahkan {enemy.name}!")
+                      print(f"\nKamu mengalahkan {enemy.name}!")
+                      sleep(1)
                       break
                   else:
                       print("Game over")
+                      sleep(1)
                       break
         if lanjut == 'n':
             print(f"\nKamu menghiraukan {enemy.name}\n\n")
             enemy = None
+            sleep(1)
             break
      
-    if pergi() == 2:
+    if berjalan == 2:
         shop(hero)
+        clear()
         
     else:
         clear()
@@ -263,7 +216,7 @@ def encounter(hero):
 #shop
 def shop(player):
     clear()
-    print(f"Selamat datang di toko, orang asing! heheh..")
+    print(f"Selamat datang di toko, orang asing! heheh..\n")
     
     
     
@@ -284,7 +237,7 @@ def shop(player):
     
     
     
-    print("\n1)Beli\n2)Jual\n3)Pergi")
+    print("1)Beli\n2)Jual\n3)Pergi")
     
     aksi = True
     
@@ -293,21 +246,46 @@ def shop(player):
         try:
             global pilihan
             pilihan = int(input("\nPilih(1,2,3) : "))
-        except:
-            pilihan = 0
+        except ValueError:
             print("Apakah kau bisa baca oh orang asing?")
-            #os.system("clear")
+            sleep(1)
+            
             pass
+            
+        if pilihan == 0:
+            maintenance()
+            break
     
         if pilihan == 1:
-            print("\n\nsedang maintenance, harap kembali beberapa hari kemudian :v\n\n")
+            maintenance()
             break
             
         if pilihan == 2:
-            print("\n\nsedang maintenance, harap kembali beberapa hari kemudian :v\n\n")
+            maintenance()
             break
         
         if pilihan == 3:
             aksi = False
             
- 
+#foods effect
+def Apple(p):
+    p.health += 10
+    print("\nIts freshness helps you on adventure :D\n")
+    print(f"""
+    Temporary buff added:
+        1. Bullseye (Crit Rate & Damage +5%)
+        """)
+    #maintenanced feature
+    
+#eating items
+def eat(player,item):
+    #on maintenance
+    if item not in foods:
+        print("You can't eat that :D")
+    else:
+        
+        if item == "Apple":
+            Apple(player)
+            
+        
+        
