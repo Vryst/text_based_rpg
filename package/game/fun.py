@@ -1,12 +1,46 @@
 
 import random
 import os
+import sys
 from time import *
 from classes import *
 
 def maintenance():
     print("Fitur maintenance! :v")
-    sleep(1)
+    loading(1)
+    
+
+import sys
+from time import time, sleep
+
+def loading(duration=3):
+    end_time = time() + duration  # Time duration for the animation
+    
+    frames = [
+        "⠂⠄⠅","⠇⠆⠘","⠐⠠⠐",
+        "⠄⠅⠇","⠆⠘⠐","⠠⠐⠘",
+        "⠅⠇⠆","⠘⠐⠠","⠐⠘⠂",
+        "⠇⠆⠘","⠐⠠⠐","⠘⠂⠄",
+        "⠆⠘⠐","⠠⠐⠘","⠂⠄⠅",
+        "⠘⠐⠠","⠐⠘⠂","⠄⠅⠇",
+        "⠐⠠⠐","⠘⠂⠄","⠅⠇⠆",
+        "⠠⠐⠘","⠂⠄⠅","⠇⠆⠘",
+        "⠂⠄⠅","⠇⠆⠘","⠐⠠⠐"
+    ]
+    
+    while time() < end_time:
+        for frame in frames:
+            if time() == end_time:
+                break
+            sys.stdout.write(f'\r{frame*10}')  # \r to overwrite the line
+            sys.stdout.flush()  # Flush the output buffer
+            sleep(0.05)
+    clear()
+
+    # Final message after the loading is done
+    # Overwrite the loading text with "Done!"
+
+
 
 def create_hero(hero_name, hero_class):
     roles = [
@@ -14,7 +48,7 @@ def create_hero(hero_name, hero_class):
         ("warrior", 1000, 130, 30, 15, 35, 80),
         ("mage", 400, 270, 15, 10, 10, 120),
         ("archer", 700, 80, 25, 45, 50, 100),
-        ("hero", 2000, 100, 70, 10, 30, 100, 100),
+        ("hero", 2000, 100, 70, 10, 30, 100),
         ("thief", 450, 50, 15, 70, 75, 200),
         ("bandit", 900, 95, 20, 5, 25, 70)
     ]
@@ -22,11 +56,23 @@ def create_hero(hero_name, hero_class):
     role, health, attack, defend, agility, crit_rate, crit_dmg = roles[hero_class - 1]
     return Hero(hero_name, role, health, attack, defend, agility, crit_rate, percent(crit_dmg))
     
-def main():
-    clear()
-    hero_name, hero_class = pilih_role()  # Pass directly
-    hero = create_hero(hero_name, hero_class)
 
+
+
+        
+
+
+def main(load=False):
+    clear()
+    if load == False:
+        hero_name, hero_class = pilih_role()  # Pass directly
+        hero = create_hero(hero_name, hero_class)
+    elif load != False:
+        hero = Hero.loadData(load)
+        print(f"========LOADED CHAR========")
+        hero.getStat()
+        input("Input apa saja untuk melanjutkan\n")
+        loading(0.5)
     
     while True:
         encounter(hero)
@@ -88,25 +134,25 @@ Pilih aksi yang tersedia:
                             else:
                                 clear()
                                 print("Pilihan tidak valid. Silakan pilih 1, 2, 3, atau 4.")
-                                sleep(1)
+                                loading(1)
                         except ValueError:
                             clear()
                             print("Harap masukkan angka yang valid (1/2/3/4).")
-                            sleep(1)
+                            loading(1)
         
                     if aksi_battle == 1:
                         player.Attack(enemy)
-                        sleep(1)
+                        loading(1)
                         enemy.Attack(player)
-                        sleep(1)
+                        loading(1)
                         
                     if aksi_battle == 2:
                         clear()
                         player.Guard()
                         
-                        sleep(1)
+                        loading(1)
                         enemy.Attack(player)
-                        sleep(1)
+                        loading(1)
                         
                         pass
                         
@@ -126,8 +172,8 @@ Pilih aksi yang tersedia:
                             except ValueError:
                                 clear()
                                 print("Harap masukkan index yang valid!")
-                                sleep(1)
-                                pass
+                                loading(1)
+                                
                     if aksi_battle == 4:
                         
                         if enemy.health <= 0:
@@ -138,11 +184,11 @@ Pilih aksi yang tersedia:
                             kabur = player.Run()
                             if kabur:
                                 print("kamu kabur")
-                                sleep(1)
+                                loading(1)
                                 break
                             else:
                                 print("gagal")
-                                sleep(1)
+                                loading(1)
                                 clear()
                         except TypeError:
                             print("Easter egg! :D")
@@ -175,34 +221,35 @@ def pergi():
 def encounter(hero):
     
     berjalan = pergi()
-    enemy = Enemy(randomizer(musuh),randomizer(roles),randomizer(),randomizer(),randomizer(),randomizer(),randomizer(),randomizer())
     
-    enemy.getStat()
     
     on = True
     if berjalan == 1:
        while on:
         
+        enemy = Enemy(randomizer(musuh),randomizer(roles),randomizer(),randomizer(),randomizer(),randomizer(),randomizer(),randomizer())
+        
+        enemy.getStat()
         lanjut = input("Serang? (y/n) : ").lower()
         
         if lanjut == "y":
                   hasil_pertarungan = battle(hero,enemy)
                   if hasil_pertarungan == "kabur":
                       print("\nKamu berhasil melarikan diri")
-                      sleep(1)
+                      loading(1)
                       break
                   if hasil_pertarungan == True:
                       print(f"\nKamu mengalahkan {enemy.name}!")
-                      sleep(1)
+                      loading(1)
                       break
                   else:
                       print("Game over")
-                      sleep(1)
+                      loading(1)
                       break
         if lanjut == 'n':
             print(f"\nKamu menghiraukan {enemy.name}\n\n")
             enemy = None
-            sleep(1)
+            loading(1)
             break
      
     if berjalan == 2:
@@ -213,14 +260,10 @@ def encounter(hero):
         clear()
         print("Kamu berjalan tanpa arah")
 
-#shop
-def shop(player):
-    clear()
-    print(f"Selamat datang di toko, orang asing! heheh..\n")
-    
-    
-    
-    
+
+
+#special shop interaction checker
+def isSpecialShop(player):
     if player.role == "thief":
         print(f"\n0)Mencuri? :v")
         pass
@@ -232,25 +275,34 @@ def shop(player):
     
     
     if player.role == "hero":
-        print(f"\n0)Tunjukkan jasa?(menyombongkan diri dengan poin reputasi)\nPoin reputasi: {player.reputasi}:v")
+        print(f"\n0)Tunjukkan jasa?\n(menyombongkan diri dengan poin reputasi)\n\nPoin reputasi: {player.reputation}:v")
         pass
-    
-    
-    
-    print("1)Beli\n2)Jual\n3)Pergi")
+        
+    else:
+        pass
+        
+#shop
+def shop(player):
     
     aksi = True
     
+    pilihan = None
     while aksi:
-        
+        clear()
+        print(f"Selamat datang di toko, orang asing! heheh..\n")
+        isSpecialShop(player)
+        print("1)Beli\n2)Jual\n3)Pergi")
         try:
-            global pilihan
+            
             pilihan = int(input("\nPilih(1,2,3) : "))
+            if pilihan not in [0,1,2,3,4]:
+                print("Harap masukkan pilihan yang tersedia! (1/2/3")
+                loading(1)
         except ValueError:
             print("Apakah kau bisa baca oh orang asing?")
-            sleep(1)
+            loading(1)
             
-            pass
+            
             
         if pilihan == 0:
             maintenance()
@@ -266,6 +318,9 @@ def shop(player):
         
         if pilihan == 3:
             aksi = False
+            
+        else:
+            pass
             
 #foods effect
 def Apple(p):
@@ -288,4 +343,5 @@ def eat(player,item):
             Apple(player)
             
         
+
         
