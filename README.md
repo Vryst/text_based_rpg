@@ -19,7 +19,7 @@ YOUR SUGGESTIONS IS HIGHLY NEEDED (⁠≧⁠▽⁠≦⁠)
 
 ## Introduction
 
-The **Text-Based RPG** is a game where players can engage in an adventure entirely through text. The world is described to the player, and they make choices to progress. There you can fight enemies, gain experience, looting theirs, upgrading your character stats, and having an interactive dialogue.
+The **Flandyr** is a game where players can engage in an adventure entirely through text. The world is described to the player, and they make choices to progress. There you can fight enemies, gain experience, looting theirs, upgrading your character stats, and having an interactive dialogue.
 
 This game is perfect for those who enjoy classic RPG mechanics but without any graphical interface—everything is presented in simple text(i haven't learn to make one with GUI, well..)
 
