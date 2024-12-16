@@ -306,3 +306,28 @@ class Enemy(Hero):
     
 #a = Hero()
 #Hero.saveData(a,"playerData/acapona.json")
+
+class Item:
+
+    def __init__(self,i):
+        self.nama = i
+
+class Makanan(Item):
+    buah = []
+
+
+    def __init__(self,i,heal):
+        self.buah.append(i)
+        super().__init__(i)
+        self.heal = heal
+    def __str__(self):
+        print(f"{self.i} efek heal {self.heal}")
+
+apple = Makanan("apple",10)
+jeruk = Makanan("jeruk",15)
+semangka = Makanan("semangka",30)
+pisang = Makanan("pisang",20)
+
+print(makanan.buah)
+
+
