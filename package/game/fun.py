@@ -296,7 +296,7 @@ def shop(player):
             
             pilihan = int(input("\nPilih(1,2,3) : "))
             if pilihan not in [0,1,2,3,4]:
-                print("Harap masukkan pilihan yang tersedia! (1/2/3")
+                print("Harap masukkan pilihan yang tersedia! (1/2/3)")
                 loading(1)
         except ValueError:
             print("Apakah kau bisa baca oh orang asing?")
