@@ -12,7 +12,6 @@ def maintenance():
 
 import sys
 from time import time, sleep
-
 def loading(duration=3):
     end_time = time() + duration  # Time duration for the animation
     
@@ -162,8 +161,10 @@ Pilih aksi yang tersedia:
                         while True:
                             
                             try:
-                            
-                                print(player.inventory)
+                                a = 1
+                                for i in player.inventory :
+                                    print(f"{a}.{i}")
+                                    a += 1
                                 pilih_item = int(input("Pilih item yang ingin digunakan: "))
                                 #fungsi_item
                                 maintenance()
@@ -309,7 +310,7 @@ def shop(player):
             break
     
         if pilihan == 1:
-            maintenance()
+            buy(player)
             break
             
         if pilihan == 2:
@@ -345,3 +346,29 @@ def eat(player,item):
         
 
         
+#buy
+
+
+def buy(player):
+    keranjang = []
+
+    while True: 
+        print("""
+apa yg ingin kamu beli
+1.apple
+""")
+        beli = input("")
+        keranjang.append(beli)
+        for i in keranjang :
+            print(f"- {i}")
+        loading(3)
+        keluar = input()
+        if keluar == "y":
+            pass
+        if keluar == "n":
+            break
+    player.inventory += keranjang
+
+
+
+
