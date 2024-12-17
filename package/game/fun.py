@@ -314,7 +314,7 @@ def shop(player):
             break
             
         if pilihan == 2:
-            maintenance()
+            sell(player,item,jumlah)
             break
         
         if pilihan == 3:
