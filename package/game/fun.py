@@ -371,11 +371,11 @@ apa yg ingin kamu beli
 
 
 
-def sell(player, nama, jumlah):
+def sell(player, item, jumlah):
         for i in player.inventory_list:
-            if i.nama == nama:
+            if i.item == item:
                 if player.stock >= jumlah:
-                    hasil = barang.harga * jumlah
+                    hasil = barang.harga * jumlah * 80/100
                     player.stok -= jumlah
                     print(f"Transaksi berhasil: {jumlah} '{nama}'terjual.Total:{hasil}")
                     return
