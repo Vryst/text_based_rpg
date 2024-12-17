@@ -4,7 +4,7 @@ import os
 import sys
 from time import *
 from datetime import datetime
-
+from prep import tsl
 
 def dash(n=25):
     print("-"*n)
@@ -400,9 +400,11 @@ class Item:
 
 class Makanan(Item):
     buah = []
+    detail_buah = []
     with open("foods.json","r") as file:
             daftar_buah = json.load(file)
             buah.extend(daftar_buah.keys())
+            detail_buah.extend(daftar_buah.values())
 
     def __init__(self,name,heal):
         
@@ -419,12 +421,18 @@ class Makanan(Item):
     
     
     @classmethod
-    def getDaftarBuah(cls):
-        index = 1
-        print("\nDAFTAR BUAH\n=============")
-        for i in cls.buah:
-            print(f"{index:<2} {i}")
-            index +=1
+    def getDaftarBuah(cls,p=False):
+        
+        
+        if p == True:
+            
+            index = 1
+            print("\nDAFTAR BUAH\n=============")
+            for i in cls.buah:
+                print(f"{index:<2} {i}")
+                index +=1
+        
+        return cls.buah, cls.detail_buah
             
     
     @classmethod
@@ -447,6 +455,7 @@ class Makanan(Item):
             print("\nWe didn't have that kind of food :D")
             print("Food number ",index, "Not found\n")
             loading(1)
+            pass
             
         
     @classmethod

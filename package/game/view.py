@@ -97,6 +97,43 @@ if __name__ == "__main__":
     # Main execution
      # Load selected language translations
     
+    language_list = [i for i in os.listdir("translation/") if i.endswith(".json")]
+    language = []
+    for i in language_list:
+        text = i.split(".")[0]
+        language.append(text)
+        
+    while True:
+        index = 1
+        print("Select Language:")
+        for i in language:
+            if "en" in i:
+                print(f"{index:<2} English")
+                index+=1
+            elif "es" in i:
+                print(f"{index:<2} Español")
+                index+=1
+            elif "ina" in i:
+                print(f"{index:<2} Indonesia")
+                index+=1
+            else:
+                break
+        try:
+            
+            language_choice = int(input("Please choose a language: "))
+            if language_choice <= 0 or language_choice > len(language_list):
+                print(f"{tsl['invalid']}")
+                loading(1)
+            else:
+                choosed = language[language_choice-1]
+                tsl = load_translations(choosed)
+                print(f"Language picked: {choosed}")
+                loading(1)
+                break
+        except ValueError as e:
+            
+            print("Please input a number!")
+            loading(1)
     if tsl:
         show_main_menu()  # Display the main menu with the loaded translations
    

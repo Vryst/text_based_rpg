@@ -281,7 +281,7 @@ def shop(player):
             break
             
         if pilihan == 2:
-            maintenance()
+            sell(player)
             break
         
         if pilihan == 3:
@@ -291,7 +291,7 @@ def shop(player):
             pass
             
 #foods effect
-def Apple(p):
+def apple(p):
     p.health += 10
     print("\nIts freshness helps you on adventure :D\n")
     print(f"""
@@ -320,35 +320,58 @@ def buy(player):
     keranjang = []
 
     while True:
-        print("""
-apa yg ingin kamu beli
-1.apple
-""")
-        beli = input("")
-        keranjang.append(beli)
-        for i in keranjang :
-            print(f"- {i}")
-        loading()
-        keluar = input()
-        if keluar == "y":
+        try:
+            
+            daftar_buah = Makanan.getDaftarBuah()
+            buah = int(input("\n\nBuah yang ingin dibeli : "))
+            beli = Makanan.getBuah(buah)
+            if beli == None:
+                
+                pass
+            else:
+                
+                keranjang.append(beli)
+                print("DAFTAR KERANJANG\n")
+            for i in keranjang :
+                print(f"- {i}")
+            loading()
+        except:
+            print(f"\n{tsl['invalidnum']}")
+        
+        lanjut = input("Lanjut belanja? (y/n): ")
+        
+        if lanjut == "y":
             pass
-        if keluar == "n":
+            
+        if lanjut == "n":
             break
     player.inventory += keranjang
 
 
 
-def sell(player, nama, jumlah):
-        for i in player.inventory_list:
-            if i.nama == nama:
-                if player.stock >= jumlah:
-                    hasil = barang.harga * jumlah
-                    player.stok -= jumlah
-                    print(f"Transaksi berhasil: {jumlah} '{nama}'terjual.Total:{hasil}")
-                    return
-                else:
-                    print(f"Stok '{nama}' tidak cukup.")
-                    return
-        print(f"Barang '{nama}' tidak ditemukan.")
+def sell(player):
         
+        daftar_buah, daftar_harga = Makanan.getDaftarBuah()
+        
+        while True:
+            
+            try:
+                if player.inventory == []:
+                    print("You didn't have anything to sell :D")
+                    pass
+                else:
+                    print("Apa yang ingin kamu jual?\n==============")
+                    index = 1
+                    for i in player.inventory:
+                        if i in daftar_buah:
+                            print(f"{index:<2} {i:<8}, Harga:  {daftar_harga[daftar_buah.index(i)]['price']:<3}")
+                            index += 1
+                        else:
+                            pass
+                        
+                    beli = int(input("Masukkan nomor item: "))
+                    
+            except Exception as e:
+               print(e)
+               print(f"{tsl['invalid']}")
 

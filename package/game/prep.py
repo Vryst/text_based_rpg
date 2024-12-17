@@ -2,9 +2,8 @@
 
 
 import json
-from fun import loading
 
-def load_translations(language):
+def load_translations(language="en"):
     try:
         with open(f"translation/{language}.json", "r", encoding="utf-8") as file:
             return json.load(file)
@@ -27,28 +26,7 @@ def get_translation(key, translations, *args):
         
 
 
-def choose_language():
-    while True:
-        
-        print("Select Language:")
-        print("1. English")
-        print("2. Español")
-        print("3. Indonesia")
-        language_choice = input("Please choose a language: ")
 
-        if language_choice == "1":
-            return "en"
-        elif language_choice == "2":
-            return "es"
-        elif language_choice == "3":
-            return "ina"
-    
-        else:
-            print("Invalid choice, defaulting to English.")
-            loading(1)
-            return "en"
         
-# Ask user to select language
-global tsl
-tsl = load_translations(choose_language()) 
     
+tsl = load_translations()

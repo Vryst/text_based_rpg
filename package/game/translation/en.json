@@ -12,7 +12,6 @@
     "option": "Please choose an option: ",
     "invalid": "That was never an option :D",
     "invalidnum": "Please input a number",
-    "erroption": "Loading game from {filename}...",
     "loading": "Now Loading...",
     "errloading": "Error loading game: {error}",
     "": "",
