@@ -1,9 +1,43 @@
 import json
 import random
 import os
-from time import sleep
+import sys
+from time import *
 from datetime import datetime
 
+
+def dash(n=25):
+    print("-"*n)
+    
+    
+def loading(duration=3):
+    end_time = time() + duration  # Time duration for the animation
+    
+    frames = [
+        "⠂⠄⠅","⠇⠆⠘","⠐⠠⠐",
+        "⠄⠅⠇","⠆⠘⠐","⠠⠐⠘",
+        "⠅⠇⠆","⠘⠐⠠","⠐⠘⠂",
+        "⠇⠆⠘","⠐⠠⠐","⠘⠂⠄",
+        "⠆⠘⠐","⠠⠐⠘","⠂⠄⠅",
+        "⠘⠐⠠","⠐⠘⠂","⠄⠅⠇",
+        "⠐⠠⠐","⠘⠂⠄","⠅⠇⠆",
+        "⠠⠐⠘","⠂⠄⠅","⠇⠆⠘",
+        "⠂⠄⠅","⠇⠆⠘","⠐⠠⠐"
+    ]
+    
+    while time() < end_time:
+        for frame in frames:
+            if time() == end_time:
+                break
+            sys.stdout.write(f'\r{frame*10}')  # \r to overwrite the line
+            sys.stdout.flush()  # Flush the output buffer
+            sleep(0.05)
+    clear()
+
+    # Final message after the loading is done
+    # Overwrite the loading text with "Done!"
+    
+    
 
 
 def clear():
@@ -98,12 +132,32 @@ def attack_reduction(target,amount):
         result = target.attack - amount
         return result
     
-    
+
+
+def get_loot(enemy):
+    loot_table = {
+        "serigala": [{"item": "Kulit Serigala", "chance": 0.8, "value": 5}],
+        "naga": [
+            {"item": "Taring Naga", "chance": 0.5, "value": 100},
+            {"item": "Tulang Naga", "chance": 0.2, "value": 200}
+        ]
+    }
+    loot = loot_table.get(enemy, [])
+    dropped_items = []
+    for item in loot:
+        if random.random() < item["chance"]:
+            dropped_items.append({"name": item["item"], "value": item["value"]})
+    return dropped_items
+
+#Contoh:
+#loot = get_loot("naga")
+#print(loot)  # Output: Drop acak dari loot naga
+
 
 #============={{HERO}}===============
 class Hero:
     
-    def __init__(self,name=None,role=None,health=0,attack=0,defend=0,agility=0,crate=0,cdamage=0,ctime=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),guard=False,inventory=[],reputation=0):
+    def __init__(self,name=None,role=None,health=0,attack=0,defend=0,agility=0,crate=0,cdamage=0,coin=0,ctime=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),guard=False,inventory=[],reputation=0):
         self.name = name
         self.role = role
         self.health = health
@@ -115,6 +169,7 @@ class Hero:
         self.ctime = ctime
         self.guard = guard
         self.inventory = inventory
+        self.coin = coin
         self.year = ctime[0:4]
         self.month = ctime[5:7]
         self.day = ctime[8:10]
@@ -123,9 +178,9 @@ class Hero:
         self.second = ctime[17:19]
         if role == "hero":
             
-            self.reputation = reputation
+            self.reputation = 100
         else:
-            self.reputation = 0
+            self.reputation = reputation
         
     
     def __repr__(self):
@@ -308,26 +363,107 @@ class Enemy(Hero):
 #Hero.saveData(a,"playerData/acapona.json")
 
 class Item:
-
-    def __init__(self,i):
-        self.nama = i
+    
+    def __init__(self, name, base_price, rarity):
+        self.name = name
+        self.base_price = base_price
+        self.rarity = rarity
+        self.current_price = base_price
+    
+    
+    
+    def update_price(self, quantity_sold):
+        demand_factor = max(0.5, 1 - (quantity_sold * 0.1))
+        self.current_price = round(self.base_price * demand_factor)
+        
+    
+    #Template untuk update selanjutnya
+    #equipment info
+    #def getDetail(item,filepath):
+#            
+#            with open(filepath, "r") as file:
+#                data = json.load(file)  # Membaca file JSON
+#                # Iterasi untuk mendapatkan key dan value
+#                print(f"""
+#Item   : {item}
+#Details:
+#        Name: {data[item]['name']}
+#        Price: {data[item]['price']}
+#        Heal: {data[item]['heal']}
+#        Buff: {data[item]['buff']}
+#        Expired time: {data[item]['expire']}
+#                    """)
+# Contoh:
+#taring_naga = Item("Taring Naga", 100, "Rare")
+#taring_naga.update_price(quantity_sold=10)
+#print(taring_naga.current_price)  # Output: Harga menurun berdasarkan jumlah penjualan
 
 class Makanan(Item):
     buah = []
+    with open("foods.json","r") as file:
+            daftar_buah = json.load(file)
+            buah.extend(daftar_buah.keys())
 
-
-    def __init__(self,i,heal):
-        self.buah.append(i)
-        super().__init__(i)
+    def __init__(self,name,heal):
+        
+        super().__init__(name,base_price,rarity)
+        self.name = name
+        self.base_price = base_price
+        self.current_price = base_price
         self.heal = heal
+        self.rarity = rarity
+        
     def __str__(self):
-        print(f"{self.i} efek heal {self.heal}")
-
-apple = Makanan("apple",10)
-jeruk = Makanan("jeruk",15)
-semangka = Makanan("semangka",30)
-pisang = Makanan("pisang",20)
-
-print(makanan.buah)
-
-
+        print(f"{self.name} efek heal {self.heal}")
+        
+    
+    
+    @classmethod
+    def getDaftarBuah(cls):
+        index = 1
+        print("\nDAFTAR BUAH\n=============")
+        for i in cls.buah:
+            print(f"{index:<2} {i}")
+            index +=1
+            
+    
+    @classmethod
+    def getBuah(cls,index):
+        
+        try:
+            if index <= 0:
+                raise IndexError
+                
+            else:
+                pass
+                
+            print(f"Buah yang diambil {cls.buah[index-1]}")
+            return cls.buah[index-1]
+            
+        except IndexError as e:
+            dash()
+            print("Error:\n",e)
+            dash()
+            print("\nWe didn't have that kind of food :D")
+            print("Food number ",index, "Not found\n")
+            loading(1)
+            
+        
+    @classmethod
+    def getDetail(cls,buah):
+            
+            with open("foods.json", "r") as file:
+                data = json.load(file)  # Membaca file JSON
+                
+                print(f"""
+Item   : {buah}
+Details:
+        Name: {data[buah]['name']}
+        Price: {data[buah]['price']}
+        Heal: {data[buah]['heal']}
+        Buff: {data[buah]['buff']}
+        Expired time: {data[buah]['expire']}
+                    """)
+                    
+                    
+                    

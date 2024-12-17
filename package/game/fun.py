@@ -1,43 +1,10 @@
 
-import random
-import os
-import sys
-from time import *
+
 from classes import *
 
 def maintenance():
     print("Fitur maintenance! :v")
     loading(1)
-    
-
-import sys
-from time import time, sleep
-def loading(duration=3):
-    end_time = time() + duration  # Time duration for the animation
-    
-    frames = [
-        "⠂⠄⠅","⠇⠆⠘","⠐⠠⠐",
-        "⠄⠅⠇","⠆⠘⠐","⠠⠐⠘",
-        "⠅⠇⠆","⠘⠐⠠","⠐⠘⠂",
-        "⠇⠆⠘","⠐⠠⠐","⠘⠂⠄",
-        "⠆⠘⠐","⠠⠐⠘","⠂⠄⠅",
-        "⠘⠐⠠","⠐⠘⠂","⠄⠅⠇",
-        "⠐⠠⠐","⠘⠂⠄","⠅⠇⠆",
-        "⠠⠐⠘","⠂⠄⠅","⠇⠆⠘",
-        "⠂⠄⠅","⠇⠆⠘","⠐⠠⠐"
-    ]
-    
-    while time() < end_time:
-        for frame in frames:
-            if time() == end_time:
-                break
-            sys.stdout.write(f'\r{frame*10}')  # \r to overwrite the line
-            sys.stdout.flush()  # Flush the output buffer
-            sleep(0.05)
-    clear()
-
-    # Final message after the loading is done
-    # Overwrite the loading text with "Done!"
 
 
 
