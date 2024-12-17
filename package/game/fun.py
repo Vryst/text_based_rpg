@@ -352,7 +352,7 @@ def eat(player,item):
 def buy(player):
     keranjang = []
 
-    while True: 
+    while True:
         print("""
 apa yg ingin kamu beli
 1.apple
@@ -361,7 +361,7 @@ apa yg ingin kamu beli
         keranjang.append(beli)
         for i in keranjang :
             print(f"- {i}")
-        loading(3)
+        loading()
         keluar = input()
         if keluar == "y":
             pass
@@ -371,4 +371,17 @@ apa yg ingin kamu beli
 
 
 
+def sell(player, nama, jumlah):
+        for i in player.inventory_list:
+            if i.nama == nama:
+                if player.stock >= jumlah:
+                    hasil = barang.harga * jumlah
+                    player.stok -= jumlah
+                    print(f"Transaksi berhasil: {jumlah} '{nama}'terjual.Total:{hasil}")
+                    return
+                else:
+                    print(f"Stok '{nama}' tidak cukup.")
+                    return
+        print(f"Barang '{nama}' tidak ditemukan.")
+        
 
