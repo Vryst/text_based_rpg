@@ -35,6 +35,7 @@ def main(load=False):
         hero = create_hero(hero_name, hero_class)
     elif load != False:
         hero = Hero.loadData(load)
+        
         print(f"========LOADED CHAR========")
         hero.getStat()
         input("Input apa saja untuk melanjutkan\n")
@@ -278,11 +279,12 @@ def shop(player):
     
         if pilihan == 1:
             buy(player)
-            break
+            pass
             
         if pilihan == 2:
-            sell(player)
-            break
+            maintenance()
+            #sell(player) #not stable
+            pass
         
         if pilihan == 3:
             aksi = False
@@ -310,41 +312,98 @@ def eat(player,item):
         if item == "Apple":
             Apple(player)
             
-        
-
-        
 #buy
-
-
 def buy(player):
     keranjang = []
-
+    receipt = {}
     while True:
+        clear()
         try:
+            index=1
             
-            daftar_buah = Makanan.getDaftarBuah()
-            buah = int(input("\n\nBuah yang ingin dibeli : "))
-            beli = Makanan.getBuah(buah)
-            if beli == None:
+            daftar_buah = Makanan.getDaftarBuah(True)
+            
+            
+            dash()
+            print(f"{'DAFTAR KERANJANG':^25}")
+            dash()
+            
+            
+            for i in sorted(set(keranjang)) :
+                duplicate = keranjang.count(i)
                 
+                if duplicate > 1:
+                    
+                    print(f"- {i:<20} x{duplicate}")
+                    receipt.update({i:duplicate})
+                        
+                else:
+                    
+                    print(f"- {i}")
+                    receipt.update({i:1})
+            
+            print(f"""
+{dash(r=True)}
+Jangan input apapun jika lanjut beli
+Input "0" untuk melakukan pembayaran
+{dash(r=True)}
+0. Bayar
+k. kembali
+h. hapus item
+""")
+            buah = input("Buah yang ingin dibeli : ")
+            
+            
+                
+            if buah == "":
+                clear()
                 pass
-            else:
                 
-                keranjang.append(beli)
-                print("DAFTAR KERANJANG\n")
-            for i in keranjang :
-                print(f"- {i}")
-            loading()
-        except:
-            print(f"\n{tsl['invalidnum']}")
-        
-        lanjut = input("Lanjut belanja? (y/n): ")
-        
-        if lanjut == "y":
-            pass
+            elif buah.lower() == "k":
+                break
+                    
+                
+            elif buah == "0":
+                if keranjang == []:
+                    dash()
+                    print("KAMU BELUM MEMBELI APAPUN")
+                    dash()
+                    pass
+                else:
+                    
+                    try:
+                        Makanan.getTotalPrice(keranjang,receipt)
+                        loading(0.5)
+                        break
+                    except:
+                        break
             
-        if lanjut == "n":
-            break
+            elif buah.lower() == "h":
+                maintenance()
+                
+            
+            try:
+                 
+                beli = Makanan.getBuah(int(buah))
+                
+                if beli == None:
+                    
+                    raise ValueError
+                    
+                    pass
+                    
+                else:
+                
+                    keranjang.append(beli)
+                
+            except:
+                pass
+            
+        except ValueError:
+            print(f"\n{tsl['invalidnum']}")
+            loading(1)
+            pass
+    
     player.inventory += keranjang
 
 

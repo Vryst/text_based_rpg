@@ -6,8 +6,10 @@ from time import *
 from datetime import datetime
 from prep import tsl
 
-def dash(n=25):
-    print("-"*n)
+def dash(n=25,r=False):
+    if r == True:
+        return "="*n
+    print("="*n)
     
     
 def loading(duration=3):
@@ -400,11 +402,12 @@ class Item:
 
 class Makanan(Item):
     buah = []
-    detail_buah = []
+    detail_buah = {}
     with open("foods.json","r") as file:
             daftar_buah = json.load(file)
             buah.extend(daftar_buah.keys())
-            detail_buah.extend(daftar_buah.values())
+            
+            detail_buah.update(daftar_buah.items())
 
     def __init__(self,name,heal):
         
@@ -429,14 +432,14 @@ class Makanan(Item):
             index = 1
             print("\nDAFTAR BUAH\n=============")
             for i in cls.buah:
-                print(f"{index:<2} {i}")
+                print(f"{index:<2} {cls.detail_buah[i]['name']:<20} {cls.detail_buah[i]['price']:>3} G")
                 index +=1
         
         return cls.buah, cls.detail_buah
             
     
     @classmethod
-    def getBuah(cls,index):
+    def getBuah(cls,index,p=False):
         
         try:
             if index <= 0:
@@ -445,16 +448,18 @@ class Makanan(Item):
             else:
                 pass
                 
-            print(f"Buah yang diambil {cls.buah[index-1]}")
+            if p==True:
+                
+                print(f"Buah yang diambil {cls.buah[index-1]}")
             return cls.buah[index-1]
             
         except IndexError as e:
-            dash()
-            print("Error:\n",e)
-            dash()
-            print("\nWe didn't have that kind of food :D")
-            print("Food number ",index, "Not found\n")
-            loading(1)
+            #dash()
+#            print("Error:\n",e)
+#            dash()
+#            print("\nWe didn't have that kind of food :D")
+#            print("Food number ",index, "Not found\n")
+#            loading(1)
             pass
             
         
@@ -475,4 +480,40 @@ Details:
                     """)
                     
                     
-                    
+    @classmethod
+    def getTotalPrice(cls,*fruits):
+        try:
+            # Pastikan ada dua elemen yang diterima
+            keranjang, receipt = fruits
+        except ValueError:
+            raise ValueError("Pastikan argumen berisi dua elemen: list dan dict.")
+
+        total = 0
+        price_list = {}
+        
+        # Baca file JSON
+        with open("foods.json", "r") as file:
+            data = json.load(file)
+            # Buat dictionary harga
+            for i, j in data.items():
+                price_list[i] = j['price']
+
+        # Hitung total harga
+        for item in sorted(list(set(keranjang))):
+            if item in price_list and item in receipt:
+                total += price_list[item] * receipt[item]
+                
+            else:
+                print(f"Item '{item}' tidak ditemukan dalam price_list atau receipt.")
+
+        # Debug output
+        print(f"Total: {total}")
+        
+        print(f"Receipt")
+        for i,j in receipt.items():
+            print(f"{i:<18}{'x':>2}{j}{cls.detail_buah[i]['price']:>4}G")
+        
+        return total
+
+
+#print(Makanan.getTotalPrice(['apple', 'banana', 'apple'], {'apple': 3, 'banana': 2}))

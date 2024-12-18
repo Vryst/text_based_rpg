@@ -12,7 +12,6 @@
     "option": "Silakan pilih opsi: ",
     "invalid": "Itu bukan opsi yang tersedia :D",
     "invalidnum": "Silakan masukkan angka",
-    "erroption": "Memuat game dari {filename}...",
     "loading": "Sedang Memuat...",
     "errloading": "Kesalahan saat memuat game: {error}",
     "": "",

@@ -1,83 +1,83 @@
 {
     "apple": {
-        "name": "apple",
+        "name": "Apple",
         "price": 20,
         "heal": 10,
         "buff": null,
         "expire": 50
     },
     "banana": {
-        "name": "banana",
+        "name": "Banana",
         "price": 30,
         "heal": 15,
         "buff": null,
         "expire": 40
     },
-    "semangka": {
-        "name": "semangka",
+    "watermelon": {
+        "name": "Watermelon",
         "price": 40,
         "heal": 20,
         "buff": null,
         "expire": 60
     },
-    "roti": {
-        "name": "roti",
+    "bread": {
+        "name": "Bread",
         "price": 50,
         "heal": 25,
         "buff": "stamina_boost",
         "expire": 70
     },
-    "daging_panggang": {
-        "name": "daging_panggang",
+    "grilled_meat": {
+        "name": "Grilled meat",
         "price": 100,
         "heal": 50,
         "buff": "strength_boost",
         "expire": 100
     },
-    "ikan_bakar": {
-        "name": "ikan_bakar",
+    "grilled_fish": {
+        "name": "Grilled fish",
         "price": 80,
         "heal": 40,
         "buff": "agility_boost",
         "expire": 80
     },
-    "susu": {
-        "name": "susu",
+    "milk": {
+        "name": "Milk",
         "price": 30,
         "heal": 15,
         "buff": "immunity_boost",
         "expire": 30
     },
-    "sup_sayur": {
-        "name": "sup_sayur",
+    "vegetable_soup": {
+        "name": "Vegetable soup",
         "price": 60,
         "heal": 30,
         "buff": "regeneration",
         "expire": 50
     },
-    "kue": {
-        "name": "kue",
+    "cake": {
+        "name": "Cake",
         "price": 40,
         "heal": 20,
         "buff": "happiness_boost",
         "expire": 90
     },
-    "cokelat": {
-        "name": "cokelat",
+    "chocolate": {
+        "name": "Chocolate",
         "price": 30,
         "heal": 15,
         "buff": "focus_boost",
         "expire": 120
     },
-    "telur_goreng": {
-        "name": "telur_goreng",
+    "fried_egg": {
+        "name": "Fried egg",
         "price": 50,
         "heal": 25,
         "buff": null,
         "expire": 60
     },
-    "nasi_goreng": {
-        "name": "nasi_goreng",
+    "fried_rice": {
+        "name": "Fried rice",
         "price": 70,
         "heal": 35,
         "buff": "energy_boost",
