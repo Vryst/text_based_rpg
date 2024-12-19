@@ -6,7 +6,14 @@ from time import *
 from datetime import datetime
 from prep import tsl
 
-def dash(n=25,r=False):
+
+
+def confirm():
+    input("Input apa saja untuk melanjutkan : ")
+    
+
+
+def dash(n=36,r=False):
     if r == True:
         return "="*n
     print("="*n)
@@ -278,11 +285,9 @@ class Hero:
     def getInv(self):
         c = 1
         l = [i for i in self.inventory]
-        #for i in self.inventory:
-#            l.append(i)
-            
+        clear()
         for j in l:
-            print("\t"+"  "+str(c)+") "+j)
+            print(f"{c}. {Makanan.detail_buah[j]['name']}")
             c+=1
         
     def getStat(self):
@@ -506,13 +511,13 @@ Details:
             else:
                 print(f"Item '{item}' tidak ditemukan dalam price_list atau receipt.")
 
+        
         # Debug output
-        print(f"Total: {total}")
-        
-        print(f"Receipt")
+        print(f"{'Receipt':^36}")
+        dash()
         for i,j in receipt.items():
-            print(f"{i:<18}{'x':>2}{j}{cls.detail_buah[i]['price']:>4}G")
-        
+            print(f"{cls.detail_buah[i]['name']:<17}{'x':>6}{j:<2}{cls.detail_buah[i]['price']:>10}G")
+        print(f"\n{'Total:':>31}{total:>4}G\n")
         return total
 
 

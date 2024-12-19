@@ -21,11 +21,9 @@ def create_hero(hero_name, hero_class):
     
     role, health, attack, defend, agility, crit_rate, crit_dmg = roles[hero_class - 1]
     return Hero(hero_name, role, health, attack, defend, agility, crit_rate, percent(crit_dmg))
-    
 
 
 
-        
 
 
 def main(load=False):
@@ -38,14 +36,14 @@ def main(load=False):
         
         print(f"========LOADED CHAR========")
         hero.getStat()
-        input("Input apa saja untuk melanjutkan\n")
+        confirm()
         loading(0.5)
     
     while True:
         encounter(hero)
         
         
-        i = input("input apa saja untuk melanjutkan")        
+        confirm()
     
     
 
@@ -321,11 +319,11 @@ def buy(player):
         try:
             index=1
             
-            daftar_buah = Makanan.getDaftarBuah(True)
+            daftar_buah,detail_buah = Makanan.getDaftarBuah(True)
             
             
             dash()
-            print(f"{'DAFTAR KERANJANG':^25}")
+            print(f"{'DAFTAR KERANJANG':^36}")
             dash()
             
             
@@ -334,12 +332,12 @@ def buy(player):
                 
                 if duplicate > 1:
                     
-                    print(f"- {i:<20} x{duplicate}")
+                    print(f"- {detail_buah[i]['name']:<20} {'x':>11}{duplicate}")
                     receipt.update({i:duplicate})
                         
                 else:
                     
-                    print(f"- {i}")
+                    print(f"- {detail_buah[i]['name']}")
                     receipt.update({i:1})
             
             print(f"""
@@ -364,17 +362,23 @@ h. hapus item
                     
                 
             elif buah == "0":
+                
                 if keranjang == []:
                     dash()
                     print("KAMU BELUM MEMBELI APAPUN")
                     dash()
                     pass
+                    
                 else:
                     
                     try:
+                        clear()
                         Makanan.getTotalPrice(keranjang,receipt)
-                        loading(0.5)
+                        confirm()
+                        loading(1)
+                        
                         break
+                        
                     except:
                         break
             
