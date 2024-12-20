@@ -277,18 +277,25 @@ class Hero:
         self.inventory = []
         print("Inventory set to ",self.inventory)
         
-        
+    
     def addInv(self,*item):
         for i in item:
-            self.inventory.append(str(i))
+            self.inventory.extend(i)
         
+    
     def getInv(self):
-        c = 1
-        l = [i for i in self.inventory]
+        counter = 1
         clear()
-        for j in l:
-            print(f"{c}. {Makanan.detail_buah[j]['name']}")
-            c+=1
+        if self.inventory == []:
+            print("You didn't have anything! :D\n")
+        for item in self.inventory:
+            if item in Makanan.buah:
+                
+                print(f"{counter:>2}. {Makanan.detail_buah[item]['name']}")
+                counter+=1
+            else:
+                pass
+                
         
     def getStat(self):
         print(f"""

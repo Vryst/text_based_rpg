@@ -129,7 +129,7 @@ Pilih aksi yang tersedia:
                             try:
                                 a = 1
                                 for i in player.inventory :
-                                    print(f"{a}.{i}")
+                                    print(f"{a:>2}. {Makanan.detail_buah[i]['name']}")
                                     a += 1
                                 pilih_item = int(input("Pilih item yang ingin digunakan: "))
                                 #fungsi_item
@@ -280,9 +280,9 @@ def shop(player):
             pass
             
         if pilihan == 2:
-            maintenance()
-            #sell(player) #not stable
-            pass
+            
+            sell(player) #not stable
+            break
         
         if pilihan == 3:
             aksi = False
@@ -408,7 +408,7 @@ h. hapus item
             loading(1)
             pass
     
-    player.inventory += keranjang
+    player.addInv(keranjang)
 
 
 
@@ -419,22 +419,29 @@ def sell(player):
         while True:
             
             try:
+                
                 if player.inventory == []:
                     print("You didn't have anything to sell :D")
-                    pass
+                    confirm()
+                    loading(0.5)
+                    break
+                    
                 else:
-                    print("Apa yang ingin kamu jual?\n==============")
+                    print("Apa yang ingin kamu jual?")
+                    dash()
                     index = 1
                     for i in player.inventory:
                         if i in daftar_buah:
-                            print(f"{index:<2} {i:<8}, Harga:  {daftar_harga[daftar_buah.index(i)]['price']:<3}")
+                            print(f"{index:>2}. {daftar_harga[i]['name']:<17}{daftar_harga[i]['price']:>3}")
                             index += 1
                         else:
                             pass
                         
                     beli = int(input("Masukkan nomor item: "))
+                    break
                     
             except Exception as e:
-               print(e)
                print(f"{tsl['invalid']}")
+               confirm()
+               break
 
